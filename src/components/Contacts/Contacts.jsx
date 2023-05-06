@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Paper, Typography } from '@mui/material';
 import { Filter, ContactsList } from 'components';
 
@@ -15,4 +15,4 @@ export const Contacts = props => {
   );
 };
 
-Contacts.propTypes = {};
+// Contacts.propTypes = {};
