@@ -1,6 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { Paper, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
@@ -11,50 +10,61 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ContactsIcon from '@mui/icons-material/Contacts';
 
-// import { ContactsList } from 'components';
+import { getColorFromName } from '../../utils/getColorFromName';
+import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
-export const Contacts = contacts => {
-  function generate(element) {
-    return [0, 1, 2].map(value =>
-      React.cloneElement(element, {
-        key: value,
-      })
-    );
-  }
+export const Contacts = ({ contacts, removeContact }) => {
+  const handleRemoveBtnClick = evt => {
+    removeContact(evt.currentTarget.dataset.id);
+  };
 
   return (
     <List>
-      {generate(
+      {contacts.map(({ id, name, number }) => (
         <Paper elevation={12} sx={{ p: 3, my: 1.5 }}>
           <ListItem
-            // key={id}
+            key={id}
             secondaryAction={
-              <IconButton edge="end" aria-label="delete">
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                data-id={id}
+                onClick={evt => handleRemoveBtnClick(evt)}
+              >
                 <DeleteIcon />
               </IconButton>
             }
           >
             <ListItemAvatar>
-              <Avatar>
-                <ContactsIcon />
+              <Avatar
+                sx={{
+                  mr: 2,
+                  bgcolor: getColorFromName(
+                    getFirstTwoLetters(name).toUpperCase()
+                  ),
+                  height: 50,
+                  width: 50,
+                }}
+              >
+                {getFirstTwoLetters(name).toUpperCase()}
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="contactssss" />
+            <ListItemText primary={`${name}  ${number}`} />
           </ListItem>
         </Paper>
-      )}
+      ))}
     </List>
   );
 };
 
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-// };
+Contacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  removeContact: PropTypes.func.isRequired,
+};

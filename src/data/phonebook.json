@@ -1,6 +1,6 @@
 [
   { "id": "id-1", "name": "Dan Brown", "number": "(066) 100-20-77" },
-  { "id": "id-2", "name": "Bill Gates", "number": "(050) 777-88-11" },
-  { "id": "id-3", "name": "Jane Stone", "number": "(067) 488-67-00" },
-  { "id": "id-4", "name": "Justin Cooker", "number": "(096) 457-56-78" }
+  { "id": "id-2", "name": "Tom Clarke", "number": "(050) 777-88-11" },
+  { "id": "id-3", "name": "Alexander Hoffman", "number": "(067) 488-67-00" },
+  { "id": "id-4", "name": "Govard Oldman", "number": "(096) 457-56-78" }
 ]

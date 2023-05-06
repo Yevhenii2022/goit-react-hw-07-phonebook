@@ -47,6 +47,12 @@ export class App extends Component {
     });
   };
 
+  removeContact = idToRemove => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(({ id }) => id !== idToRemove),
+    }));
+  };
+
   showNotification = message => {
     toast.info(message);
   };
@@ -82,7 +88,10 @@ export class App extends Component {
               Contacts
             </Typography>
             <Filter setFilter={this.setFilter} />
-            <Contacts contacts={this.getContactsList()} />
+            <Contacts
+              contacts={this.getContactsList()}
+              removeContact={this.removeContact}
+            />
           </Paper>
         </Box>
       </Container>

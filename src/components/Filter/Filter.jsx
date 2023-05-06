@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import InputAdornment from '@mui/material/InputAdornment';
 
 export class Filter extends Component {
-  // static propTypes = {
-  //   setFilter: PropTypes.func.isRequired,
-  // };
+  static propTypes = {
+    setFilter: PropTypes.func.isRequired,
+  };
   state = {
     value: '',
   };
@@ -25,13 +25,11 @@ export class Filter extends Component {
             width: 300,
           }}
           variant="outlined"
-          // label="Name"
           type="text"
           value={this.state.value}
           onChange={this.handleInputChange}
           InputLabelProps={{ shrink: true }}
           placeholder="find a contact by name"
-          // fullWidth
           aria-describedby="find a contact by name"
           InputProps={{
             startAdornment: (

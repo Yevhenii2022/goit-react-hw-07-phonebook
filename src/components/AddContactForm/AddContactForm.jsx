@@ -67,8 +67,6 @@ export const AddContactForm = ({ addContact }) => {
               label="Name"
               name="name"
               type="text"
-              // value={props.values.password}
-              // onChange={props.handleChange}
               InputLabelProps={{ shrink: true }}
               placeholder="enter the name of the contact"
               fullWidth
@@ -82,10 +80,7 @@ export const AddContactForm = ({ addContact }) => {
               variant="outlined"
               label="Phone number"
               name="phone"
-              type="text"
-              // value={props.values.password}
-              // onChange={props.handleChange}
-              // helperText="input format: 066-101-30-07"
+              type="tel"
               InputLabelProps={{ shrink: true }}
               placeholder="enter the contact's phone number"
               fullWidth
