@@ -1,18 +1,18 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { Paper, Typography } from '@mui/material';
-import { Filter, ContactsList } from 'components';
+// import { Paper, Typography } from '@mui/material';
+import { ContactsList } from 'components';
 
-export const Contacts = props => {
-  return (
-    <Paper elevation={12} sx={{ p: 3 }}>
-      <Typography variant="h5" sx={{ my: 1.5 }} align="center">
-        Contacts
-      </Typography>
-      <Filter />
-      <ContactsList />
-    </Paper>
-  );
+export const Contacts = contacts => {
+  return <ContactsList contacts={contacts} />;
 };
 
-// Contacts.propTypes = {};
+// Contacts.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     }).isRequired
+//   ).isRequired,
+// };

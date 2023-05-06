@@ -20,12 +20,13 @@ function generate(element) {
   );
 }
 
-export const ContactsList = props => {
+export const ContactsList = contacts => {
   return (
     <List>
       {generate(
         <Paper elevation={12} sx={{ p: 3, my: 1.5 }}>
           <ListItem
+            // key={id}
             secondaryAction={
               <IconButton edge="end" aria-label="delete">
                 <DeleteIcon />
@@ -37,7 +38,7 @@ export const ContactsList = props => {
                 <ContactsIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Single-line item" />
+            <ListItemText primary="fdg" />
           </ListItem>
         </Paper>
       )}
@@ -45,4 +46,12 @@ export const ContactsList = props => {
   );
 };
 
-// ContactsList.propTypes = {};
+// ContactsList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     }).isRequired
+//   ).isRequired,
+// };

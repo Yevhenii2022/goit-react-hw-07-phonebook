@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button, Paper, TextField } from '@mui/material';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -35,7 +35,13 @@ const Wrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-export const AddContactForm = props => {
+export const AddContactForm = ({ addContact }) => {
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    resetForm();
+    addContact(values);
+    setSubmitting(false);
+  };
+
   return (
     <Paper elevation={12} sx={{ p: 3 }}>
       <Formik
@@ -44,6 +50,7 @@ export const AddContactForm = props => {
           phone: '',
         }}
         validationSchema={schema}
+        onSubmit={handleSubmit}
       >
         <Form
           style={{
@@ -108,4 +115,6 @@ export const AddContactForm = props => {
   );
 };
 
-// AddContactForm.propTypes = {};
+AddContactForm.propTypes = {
+  addContact: PropTypes.func.isRequired,
+};
