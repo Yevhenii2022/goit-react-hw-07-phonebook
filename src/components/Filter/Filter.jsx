@@ -14,7 +14,7 @@ export class Filter extends Component {
 
   handleInputChange = ({ target }) => {
     this.setState({ value: target.value });
-    this.props.setFilter(target.value.toLowerCase());
+    this.props.setFilter(target.value.toLowerCase().trim());
   };
 
   render() {

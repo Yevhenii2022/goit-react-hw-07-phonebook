@@ -34,18 +34,16 @@ export class App extends Component {
   };
 
   getContactsList = () => {
-    const { contacts } = this.state;
-    // const normalizedFilter = filter.toLowerCase().trim();
+    const { contacts, filter } = this.state;
 
-    // return contacts.filter(contact =>
-    //   contact.name.toLowerCase().includes(normalizedFilter)
-    // );
-    return contacts;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
   };
 
   setFilter = filter => {
     this.setState({
-      filter: filter.toLowerCase().trim(),
+      filter: filter,
     });
   };
 
