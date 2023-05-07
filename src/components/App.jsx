@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Box, Container, Paper, CssBaseline, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.min.css';
 import { AddContactForm, Contacts, Filter } from './';
 import {
   showInfoMessage,
@@ -103,14 +102,25 @@ export class App extends Component {
           }}
         >
           <Paper elevation={12} sx={{ p: 3 }}>
-            <Typography variant="h5" sx={{ my: 1.5 }} align="center">
+            <Typography variant="h4" sx={{ my: 1.5 }} align="center">
               Contacts
             </Typography>
-            <Filter setFilter={this.setFilter} />
-            <Contacts
-              contacts={this.getContactsList()}
-              removeContact={this.removeContact}
-            />
+            {this.state.contacts.length ? (
+              <>
+                <Filter setFilter={this.setFilter} />
+                <Contacts
+                  contacts={this.getContactsList()}
+                  removeContact={this.removeContact}
+                />
+              </>
+            ) : (
+              <Paper elevation={10} sx={{ p: 1 }} align="center">
+                <Typography variant="subtitle1: 'h4'" sx={{ my: 2 }}>
+                  There are no saved contacts. Use the form above to add new
+                  contacts.
+                </Typography>
+              </Paper>
+            )}
           </Paper>
         </Box>
       </Container>
