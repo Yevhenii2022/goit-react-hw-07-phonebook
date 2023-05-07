@@ -42,6 +42,9 @@ export const AddContactForm = ({ addContact }) => {
     setSubmitting(false);
   };
 
+  // const { name, number } = this.props.state.contacts;
+  // const canSubmit = name && number;
+
   return (
     <Paper elevation={12} sx={{ p: 3 }}>
       <Formik
@@ -52,59 +55,63 @@ export const AddContactForm = ({ addContact }) => {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        <Form
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 40,
-          }}
-        >
-          <Wrapper>
-            <Field
-              as={TextField}
-              variant="outlined"
-              label="Name"
-              name="name"
-              type="text"
-              InputLabelProps={{ shrink: true }}
-              placeholder="enter the name of the contact"
-              fullWidth
-              aria-describedby="contact's name"
-            />
-            <MyErrorMsg name="name" component="div" />
-          </Wrapper>
-          <Wrapper>
-            <Field
-              as={TextField}
-              variant="outlined"
-              label="Phone number"
-              name="phone"
-              type="tel"
-              InputLabelProps={{ shrink: true }}
-              placeholder="enter the contact's phone number"
-              fullWidth
-              aria-describedby="phone number"
-            />
-            <MyErrorMsg name="phone" component="div" />
-          </Wrapper>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            centerRipple="true"
-            sx={{
-              width: 200,
+        {({ dirty, isValid }) => (
+          <Form
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 40,
             }}
+            // autoComplete="off"
           >
-            <ContactPhoneIcon
+            <Wrapper>
+              <Field
+                as={TextField}
+                variant="outlined"
+                label="Name"
+                name="name"
+                type="text"
+                InputLabelProps={{ shrink: true }}
+                placeholder="enter the name of the contact"
+                fullWidth
+                aria-describedby="contact's name"
+              />
+              <MyErrorMsg name="name" component="div" />
+            </Wrapper>
+            <Wrapper>
+              <Field
+                as={TextField}
+                variant="outlined"
+                label="Phone number"
+                name="phone"
+                type="tel"
+                InputLabelProps={{ shrink: true }}
+                placeholder="enter the contact's phone number"
+                fullWidth
+                aria-describedby="phone number"
+              />
+              <MyErrorMsg name="phone" component="div" />
+            </Wrapper>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              centerRipple="true"
               sx={{
-                mr: 1.5,
+                width: 200,
               }}
-            />
-            ADD CONTACT
-          </Button>
-        </Form>
+              disabled={!dirty || !isValid}
+            >
+              <ContactPhoneIcon
+                sx={{
+                  mr: 1.5,
+                }}
+              />
+              ADD CONTACT
+            </Button>
+          </Form>
+        )}
       </Formik>
     </Paper>
   );

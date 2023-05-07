@@ -16,7 +16,7 @@ import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
 export const Contacts = ({ contacts, removeContact }) => {
   const handleRemoveBtnClick = evt => {
-    removeContact(evt.currentTarget.dataset.id);
+    removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
   };
 
   return (
@@ -30,6 +30,7 @@ export const Contacts = ({ contacts, removeContact }) => {
                 edge="end"
                 aria-label="delete"
                 data-id={id}
+                data-name={name}
                 onClick={evt => handleRemoveBtnClick(evt)}
               >
                 <DeleteIcon />

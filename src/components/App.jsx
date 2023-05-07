@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Box, Container, Paper, CssBaseline, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import { ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.min.css';
 import { AddContactForm, Contacts, Filter } from './';
+import {
+  showInfoMessage,
+  showSuccessMessage,
+  showErrorMessage,
+} from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
 
 export class App extends Component {
@@ -15,22 +20,31 @@ export class App extends Component {
   addContactToList = ({ name, number }) => {
     if (
       this.state.contacts.some(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
+        contact => contact.name.toLowerCase() === name.toLowerCase().trim()
       )
     ) {
-      this.showNotification('This contact name is already in your phonebook');
-    } else {
-      this.setState(prevState => ({
-        contacts: [
-          ...prevState.contacts,
-          {
-            id: nanoid(),
-            name,
-            number,
-          },
-        ],
-      }));
+      showInfoMessage('This contact name is already in your phonebook');
+      return;
     }
+
+    // if (this.state.contacts.some(contact => contact.number === number)) {
+    //   showInfoMessage('This phone number is already in your phone book');
+    //   return;
+    // }
+
+    this.setState(prevState => ({
+      contacts: [
+        ...prevState.contacts,
+        {
+          id: nanoid(),
+          name,
+          number,
+        },
+      ],
+    }));
+    showSuccessMessage(
+      `New contact "${name}" has been added in your phone book`
+    );
   };
 
   getContactsList = () => {
@@ -47,14 +61,11 @@ export class App extends Component {
     });
   };
 
-  removeContact = idToRemove => {
+  removeContact = (idToRemove, name) => {
     this.setState(({ contacts }) => ({
       contacts: contacts.filter(({ id }) => id !== idToRemove),
     }));
-  };
-
-  showNotification = message => {
-    toast.info(message);
+    showErrorMessage(`You have deleted a contact "${name}"`);
   };
 
   render() {
