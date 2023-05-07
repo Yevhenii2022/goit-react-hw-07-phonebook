@@ -11,7 +11,7 @@ const schema = yup.object().shape({
     .string()
     .min(3, 'must be at least 3 characters')
     .required('name is required'),
-  phone: yup
+  number: yup
     .string()
     .matches(
       /\([0-9]{3}\)[ .-][0-9]{3}[ .-][0-9]{2}[ .-][0-9]{2}/,
@@ -42,15 +42,12 @@ export const AddContactForm = ({ addContact }) => {
     setSubmitting(false);
   };
 
-  // const { name, number } = this.props.state.contacts;
-  // const canSubmit = name && number;
-
   return (
     <Paper elevation={12} sx={{ p: 3 }}>
       <Formik
         initialValues={{
           name: '',
-          phone: '',
+          number: '',
         }}
         validationSchema={schema}
         onSubmit={handleSubmit}
@@ -84,14 +81,14 @@ export const AddContactForm = ({ addContact }) => {
                 as={TextField}
                 variant="outlined"
                 label="Phone number"
-                name="phone"
+                name="number"
                 type="tel"
                 InputLabelProps={{ shrink: true }}
                 placeholder="enter the contact's phone number"
                 fullWidth
                 aria-describedby="phone number"
               />
-              <MyErrorMsg name="phone" component="div" />
+              <MyErrorMsg name="number" component="div" />
             </Wrapper>
             <Button
               type="submit"

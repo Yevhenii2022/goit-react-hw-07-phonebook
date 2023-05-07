@@ -18,19 +18,27 @@ export class App extends Component {
   };
 
   addContactToList = ({ name, number }) => {
+    const repeatNumber = this.state.contacts.find(
+      item => item.number === number
+    );
+
     if (
       this.state.contacts.some(
         contact => contact.name.toLowerCase() === name.toLowerCase().trim()
       )
     ) {
-      showInfoMessage('This contact name is already in your phonebook');
+      showInfoMessage(
+        `The contact with name "${name}" is already in your phonebook`
+      );
       return;
     }
 
-    // if (this.state.contacts.some(contact => contact.number === number)) {
-    //   showInfoMessage('This phone number is already in your phone book');
-    //   return;
-    // }
+    if (this.state.contacts.some(contact => contact.number === number)) {
+      showInfoMessage(
+        `Number "${number}" is already in contacts with name "${repeatNumber.name}"`
+      );
+      return;
+    }
 
     this.setState(prevState => ({
       contacts: [
