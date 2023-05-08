@@ -60,7 +60,7 @@ export const AddContactForm = ({ addContact }) => {
               alignItems: 'center',
               gap: 40,
             }}
-            // autoComplete="off"
+            autoComplete="off"
           >
             <Wrapper>
               <Field
