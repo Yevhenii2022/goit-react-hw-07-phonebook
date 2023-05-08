@@ -18,37 +18,34 @@ export class App extends Component {
 
   addContactToList = ({ name, number }) => {
     const repeatNumber = this.state.contacts.find(
-      item => item.number === number
+      contact => contact.number === number
     );
 
-    if (
-      this.state.contacts.some(
-        contact => contact.name.toLowerCase() === name.toLowerCase().trim()
-      )
-    ) {
+    const repeatName = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase().trim()
+    );
+
+    if (repeatName) {
       showInfoMessage(
         `The contact with name "${name}" is already in your phonebook`
       );
       return;
-    }
-
-    if (this.state.contacts.some(contact => contact.number === number)) {
+    } else if (repeatNumber) {
       showInfoMessage(
         `Number "${number}" is already in contacts with name "${repeatNumber.name}"`
       );
       return;
-    }
-
-    this.setState(prevState => ({
-      contacts: [
-        ...prevState.contacts,
-        {
-          id: nanoid(),
-          name,
-          number,
-        },
-      ],
-    }));
+    } else
+      this.setState(prevState => ({
+        contacts: [
+          ...prevState.contacts,
+          {
+            id: nanoid(),
+            name,
+            number,
+          },
+        ],
+      }));
     showSuccessMessage(
       `New contact "${name}" has been added in your phone book`
     );
