@@ -12,9 +12,25 @@ import phonebook from '../data/phonebook.json';
 
 export class App extends Component {
   state = {
-    contacts: [...phonebook],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts !== null) {
+      const parsedContacts = JSON.parse(savedContacts);
+      this.setState({ contacts: parsedContacts });
+      return;
+    }
+    this.setState({ contacts: phonebook });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   addContactToList = ({ name, number }) => {
     const repeatNumber = this.state.contacts.find(
