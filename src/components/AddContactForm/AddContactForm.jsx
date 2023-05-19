@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Paper, TextField } from '@mui/material';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import styled from '@emotion/styled';
+import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
+import { MyErrorMsg, Wrapper } from './AddContactForm.styled';
 
 const schema = yup.object().shape({
   name: yup
@@ -20,20 +20,6 @@ const schema = yup.object().shape({
     .max(15, 'Invalid format. Must be (066) 101-30-07')
     .required('phone number is required'),
 });
-
-const MyErrorMsg = styled(ErrorMessage)`
-  position: absolute;
-  left: 0;
-  bottom: -30px;
-  color: red;
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  position: relative;
-  min-height: 50px;
-  margin-bottom: 20px;
-`;
 
 export const AddContactForm = ({ addContact }) => {
   const handleSubmit = (values, { setSubmitting, resetForm }) => {

@@ -44,15 +44,16 @@ export const App = () => {
         `Number "${number}" is already in contacts with name "${repeatNumber.name}"`
       );
       return;
-    } else
-      setContacts(prevState => [
-        ...prevState,
-        {
-          id: nanoid(),
-          name,
-          number,
-        },
-      ]);
+    }
+
+    setContacts(prevState => [
+      ...prevState,
+      {
+        id: nanoid(),
+        name,
+        number,
+      },
+    ]);
     showSuccessMessage(
       `New contact "${name}" has been added in your phone book`
     );
