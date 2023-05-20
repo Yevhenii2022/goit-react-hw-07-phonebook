@@ -73,7 +73,7 @@ export const App = () => {
   return (
     <Container maxWidth="lg">
       <CssBaseline />
-      <MyAppBar setFilter={setFilter}></MyAppBar>
+      <MyAppBar badgeNumber={contacts.length} setFilter={setFilter}></MyAppBar>
       <Typography variant="h4" sx={{ my: 1.5 }} align="center" color="#78909c">
         Welcome to our app for saving contacts
       </Typography>

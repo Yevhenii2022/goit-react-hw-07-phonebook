@@ -53,6 +53,7 @@ export const AddContactForm = ({ addContact }) => {
           label="Name"
           name="name"
           type="text"
+          autoFocus
           value={formik.values.name}
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}

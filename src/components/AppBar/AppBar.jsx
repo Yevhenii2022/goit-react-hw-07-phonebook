@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const MyAppBar = ({ setFilter }) => {
+export const MyAppBar = ({ setFilter, badgeNumber = 0 }) => {
   const [value, setValue] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -138,7 +138,7 @@ export const MyAppBar = ({ setFilter }) => {
           aria-label="show 4 new contacts"
           color="inherit"
         >
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={badgeNumber} color="error" showZero>
             <CallIcon />
           </Badge>
         </IconButton>
@@ -193,7 +193,9 @@ export const MyAppBar = ({ setFilter }) => {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            sx={{ display: { xs: 'none', md: 'flex', alignItems: 'center' } }}
+          >
             {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -203,12 +205,20 @@ export const MyAppBar = ({ setFilter }) => {
                 <MailIcon />
               </Badge>
             </IconButton> */}
+            <Typography
+              variant="body1"
+              noWrap
+              component="div"
+              // sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              HELLO, User!
+            </Typography>
             <IconButton
               size="large"
               aria-label="show 4 new contacts"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={badgeNumber} color="error" showZero>
                 <CallIcon />
               </Badge>
             </IconButton>
