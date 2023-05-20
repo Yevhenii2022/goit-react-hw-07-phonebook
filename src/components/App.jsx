@@ -8,7 +8,7 @@ import {
   showErrorMessage,
 } from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
-import { AddContactForm, Contacts, Filter, MyAppBar } from './';
+import { AddContactForm, Contacts, MyAppBar } from './';
 
 const getInitialСontacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -73,7 +73,7 @@ export const App = () => {
   return (
     <Container maxWidth="lg">
       <CssBaseline />
-      <MyAppBar></MyAppBar>
+      <MyAppBar setFilter={setFilter}></MyAppBar>
       <Typography variant="h4" sx={{ my: 1.5 }} align="center" color="#78909c">
         Welcome to our app for saving contacts
       </Typography>
@@ -105,7 +105,7 @@ export const App = () => {
           </Typography>
           {contacts.length ? (
             <>
-              <Filter setFilter={setFilter} />
+              {/* <Filter setFilter={setFilter} /> */}
               <Contacts
                 contacts={getContactsList()}
                 removeContact={removeContact}
