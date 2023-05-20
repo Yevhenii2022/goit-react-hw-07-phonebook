@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Box, Container, Paper, CssBaseline, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { ToastContainer } from 'react-toastify';
-import { AddContactForm, Contacts, Filter } from './';
 import {
   showInfoMessage,
   showSuccessMessage,
   showErrorMessage,
 } from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
+import { AddContactForm, Contacts, Filter, MyAppBar } from './';
 
 const getInitialСontacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -71,9 +71,13 @@ export const App = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <CssBaseline />
-      <Typography variant="h4" sx={{ my: 1.5 }} align="center">
+      <MyAppBar></MyAppBar>
+      <Typography variant="h4" sx={{ my: 1.5 }} align="center" color="#78909c">
+        Welcome to our app for saving contacts
+      </Typography>
+      <Typography variant="h3" sx={{ my: 1.5 }} align="center" color="#546e7a">
         PHONEBOOK
       </Typography>
       <Box
