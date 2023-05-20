@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Paper, TextField } from '@mui/material';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-import { Field, Form, Formik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { MyErrorMsg, Wrapper } from './AddContactForm.styled';
+import { formatPhoneNumber } from '../../utils/phoneFormatter';
 
 const schema = yup.object().shape({
   name: yup
@@ -22,80 +22,83 @@ const schema = yup.object().shape({
 });
 
 export const AddContactForm = ({ addContact }) => {
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    resetForm();
-    addContact(values);
-    setSubmitting(false);
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      number: '',
+    },
+    validationSchema: schema,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      resetForm();
+      addContact(values);
+      setSubmitting(false);
+    },
+  });
 
   return (
     <Paper elevation={12} sx={{ p: 3 }}>
-      <Formik
-        initialValues={{
-          name: '',
-          number: '',
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 40,
         }}
-        validationSchema={schema}
-        onSubmit={handleSubmit}
+        // autoComplete="off"
+        onSubmit={formik.handleSubmit}
       >
-        {({ dirty, isValid }) => (
-          <Form
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 40,
+        <TextField
+          variant="outlined"
+          id="name"
+          label="Name"
+          name="name"
+          type="text"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+          InputLabelProps={{ shrink: true }}
+          placeholder="enter the name of the contact"
+          fullWidth
+          aria-describedby="contact's name"
+        />
+
+        <TextField
+          variant="outlined"
+          id="number"
+          label="Phone number"
+          name="number"
+          type="tel"
+          value={formik.values.number}
+          onChange={evt => {
+            evt.target.value = formatPhoneNumber(evt.target.value);
+            formik.handleChange(evt);
+          }}
+          error={formik.touched.number && Boolean(formik.errors.number)}
+          helperText={formik.touched.number && formik.errors.number}
+          InputLabelProps={{ shrink: true }}
+          placeholder="enter the contact's phone number"
+          fullWidth
+          aria-describedby="phone number"
+        />
+
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          centerRipple="true"
+          sx={{
+            width: 200,
+          }}
+        >
+          <ContactPhoneIcon
+            sx={{
+              mr: 1.5,
             }}
-            autoComplete="off"
-          >
-            <Wrapper>
-              <Field
-                as={TextField}
-                variant="outlined"
-                label="Name"
-                name="name"
-                type="text"
-                InputLabelProps={{ shrink: true }}
-                placeholder="enter the name of the contact"
-                fullWidth
-                aria-describedby="contact's name"
-              />
-              <MyErrorMsg name="name" component="div" />
-            </Wrapper>
-            <Wrapper>
-              <Field
-                as={TextField}
-                variant="outlined"
-                label="Phone number"
-                name="number"
-                type="tel"
-                InputLabelProps={{ shrink: true }}
-                placeholder="enter the contact's phone number"
-                fullWidth
-                aria-describedby="phone number"
-              />
-              <MyErrorMsg name="number" component="div" />
-            </Wrapper>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              centerRipple="true"
-              sx={{
-                width: 200,
-              }}
-              disabled={!dirty || !isValid}
-            >
-              <ContactPhoneIcon
-                sx={{
-                  mr: 1.5,
-                }}
-              />
-              ADD CONTACT
-            </Button>
-          </Form>
-        )}
-      </Formik>
+          />
+          ADD CONTACT
+        </Button>
+      </form>
     </Paper>
   );
 };
