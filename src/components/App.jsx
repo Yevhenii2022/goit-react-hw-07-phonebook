@@ -8,7 +8,7 @@ import {
   showErrorMessage,
 } from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
-import { AddContactForm, Contacts, MyAppBar, ButtonIconAdd } from './';
+import { AddContactForm, Contacts, MyAppBar } from './';
 
 const getInitialСontacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -80,18 +80,8 @@ export const App = () => {
       <Typography variant="h3" sx={{ my: 1.5 }} align="center" color="#546e7a">
         PHONEBOOK
       </Typography>
-      <ButtonIconAdd children={'CREATE A NEW CONTACT'}></ButtonIconAdd>
-      <Box
-        component="section"
-        m="auto"
-        sx={{
-          mb: 5,
-          width: 400,
-        }}
-      >
-        <AddContactForm addContact={addContactToList} />
-        <ToastContainer />
-      </Box>
+      <AddContactForm addContact={addContactToList} />
+      <ToastContainer />
       <Box
         component="section"
         m="auto"
@@ -106,7 +96,6 @@ export const App = () => {
           </Typography>
           {contacts.length ? (
             <>
-              {/* <Filter setFilter={setFilter} /> */}
               <Contacts
                 contacts={getContactsList()}
                 removeContact={removeContact}

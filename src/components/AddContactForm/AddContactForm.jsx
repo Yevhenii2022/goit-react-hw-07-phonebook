@@ -1,10 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Paper, TextField } from '@mui/material';
+import { Button, TextField, Modal, Box } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
+
+const styleModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  margin: 0,
+  transform: 'translate(-50%, -50%)',
+  width: 390,
+  bgcolor: 'background.paper',
+  border: '2px solid #303f9f',
+  borderRadius: 1.5,
+  boxShadow: 24,
+  p: 4,
+};
 
 const schema = yup.object().shape({
   name: yup
@@ -22,6 +36,10 @@ const schema = yup.object().shape({
 });
 
 export const AddContactForm = ({ addContact }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -32,75 +50,94 @@ export const AddContactForm = ({ addContact }) => {
       resetForm();
       addContact(values);
       setSubmitting(false);
+      setOpen(false);
     },
   });
 
   return (
-    <Paper elevation={12} sx={{ p: 3 }}>
-      <form
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 40,
-        }}
-        // autoComplete="off"
-        onSubmit={formik.handleSubmit}
+    <>
+      <Button
+        variant="outlined"
+        size="large"
+        startIcon={<PersonAddIcon />}
+        aria-label="create contact"
+        onClick={handleOpen}
+        sx={{ mb: 4, ml: 9.5 }}
       >
-        <TextField
-          variant="outlined"
-          id="name"
-          label="Name"
-          name="name"
-          type="text"
-          autoFocus
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={formik.touched.name && formik.errors.name}
-          InputLabelProps={{ shrink: true }}
-          placeholder="enter the name of the contact"
-          fullWidth
-          aria-describedby="contact's name"
-        />
-
-        <TextField
-          variant="outlined"
-          id="number"
-          label="Phone number"
-          name="number"
-          type="tel"
-          value={formik.values.number}
-          onChange={evt => {
-            evt.target.value = formatPhoneNumber(evt.target.value);
-            formik.handleChange(evt);
-          }}
-          error={formik.touched.number && Boolean(formik.errors.number)}
-          helperText={formik.touched.number && formik.errors.number}
-          InputLabelProps={{ shrink: true }}
-          placeholder="enter the contact's phone number"
-          fullWidth
-          aria-describedby="phone number"
-        />
-
-        <Button
-          type="submit"
-          variant="contained"
-          size="large"
-          centerRipple="true"
-          sx={{
-            width: 200,
-          }}
-        >
-          <PersonAddIcon
-            sx={{
-              mr: 1.5,
+        CREATE A NEW CONTACT
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-add-contact-title"
+        aria-describedby="modal-add-contact-description"
+      >
+        <Box sx={styleModal}>
+          <form
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 40,
             }}
-          />
-          ADD CONTACT
-        </Button>
-      </form>
-    </Paper>
+            // autoComplete="off"
+            onSubmit={formik.handleSubmit}
+          >
+            <TextField
+              variant="outlined"
+              id="name"
+              label="Name"
+              name="name"
+              type="text"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+              InputLabelProps={{ shrink: true }}
+              placeholder="enter the name of the contact"
+              fullWidth
+              aria-describedby="contact's name"
+            />
+
+            <TextField
+              variant="outlined"
+              id="number"
+              label="Phone number"
+              name="number"
+              type="tel"
+              value={formik.values.number}
+              onChange={evt => {
+                evt.target.value = formatPhoneNumber(evt.target.value);
+                formik.handleChange(evt);
+              }}
+              error={formik.touched.number && Boolean(formik.errors.number)}
+              helperText={formik.touched.number && formik.errors.number}
+              InputLabelProps={{ shrink: true }}
+              placeholder="enter the contact's phone number"
+              fullWidth
+              aria-describedby="phone number"
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              centerRipple="true"
+              sx={{
+                width: 200,
+              }}
+            >
+              <PersonAddIcon
+                sx={{
+                  mr: 1.5,
+                }}
+              />
+              ADD CONTACT
+            </Button>
+          </form>
+        </Box>
+      </Modal>
+    </>
   );
 };
 
