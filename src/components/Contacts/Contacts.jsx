@@ -11,11 +11,32 @@ import {
   Typography,
   Paper,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0),
+  },
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    margin: theme.spacing(0),
+    height: 40,
+    width: 40,
+  },
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    fontSize: theme.spacing(1.85),
+  },
+}));
 
 export const Contacts = ({ contacts, removeContact, theme }) => {
   const handleRemoveBtnClick = evt => {
@@ -25,7 +46,7 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
   return (
     <List>
       {contacts.map(({ id, name, number }) => (
-        <Paper
+        <StyledPaper
           elevation={12}
           sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}
         >
@@ -37,9 +58,9 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
                   href={`tel:+38${number.replace(/[^\d]/g, '')}`}
                   aria-label="call"
                 >
-                  <Avatar sx={{ backgroundColor: '#4caf50', mr: 1 }}>
+                  <StyledAvatar sx={{ backgroundColor: '#4caf50', mr: 1 }}>
                     <PhoneInTalkIcon />
-                  </Avatar>
+                  </StyledAvatar>
                 </a>
                 <IconButton
                   color="primary"
@@ -62,7 +83,7 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
             }
           >
             <ListItemAvatar>
-              <Avatar
+              <StyledAvatar
                 sx={{
                   mr: 2,
                   bgcolor: getColorFromName(
@@ -73,14 +94,14 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
                 }}
               >
                 {getFirstTwoLetters(name).toUpperCase()}
-              </Avatar>
+              </StyledAvatar>
             </ListItemAvatar>
             <Box>
-              <Typography variant="h6">{name}</Typography>
-              <Typography>{number}</Typography>
+              <StyledTypography variant="h6">{name}</StyledTypography>
+              <StyledTypography>{number}</StyledTypography>
             </Box>
           </ListItem>
-        </Paper>
+        </StyledPaper>
       ))}
     </List>
   );
