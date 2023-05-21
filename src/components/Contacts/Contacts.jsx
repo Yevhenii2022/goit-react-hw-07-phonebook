@@ -6,10 +6,14 @@ import {
   ListItemAvatar,
   IconButton,
   Avatar,
-  ListItemText,
+  Stack,
+  Box,
+  Typography,
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
@@ -28,16 +32,33 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
           <ListItem
             key={id}
             secondaryAction={
-              <IconButton
-                color="error"
-                edge="end"
-                aria-label="delete"
-                data-id={id}
-                data-name={name}
-                onClick={evt => handleRemoveBtnClick(evt)}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <a
+                  href={`tel:+38${number.replace(/[^\d]/g, '')}`}
+                  aria-label="call"
+                >
+                  <Avatar sx={{ backgroundColor: '#4caf50', mr: 1 }}>
+                    <PhoneInTalkIcon />
+                  </Avatar>
+                </a>
+                <IconButton
+                  color="primary"
+                  aria-label="edit contact"
+                  data-id={id}
+                >
+                  <BorderColorIcon />
+                </IconButton>
+                <IconButton
+                  color="error"
+                  // edge="end"
+                  aria-label="delete contact"
+                  data-id={id}
+                  data-name={name}
+                  onClick={evt => handleRemoveBtnClick(evt)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
             }
           >
             <ListItemAvatar>
@@ -54,7 +75,10 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
                 {getFirstTwoLetters(name).toUpperCase()}
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={`${name}  ${number}`} />
+            <Box>
+              <Typography variant="h6">{name}</Typography>
+              <Typography>{number}</Typography>
+            </Box>
           </ListItem>
         </Paper>
       ))}
