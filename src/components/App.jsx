@@ -87,7 +87,7 @@ export const App = () => {
         m="auto"
         sx={{
           mb: 5,
-          width: 650,
+          maxWidth: '900px',
         }}
       >
         <Paper elevation={12} sx={{ p: 3 }}>
@@ -104,7 +104,7 @@ export const App = () => {
           ) : (
             <Paper elevation={10} sx={{ p: 1 }} align="center">
               <Typography variant="subtitle1: 'h4'" sx={{ my: 2 }}>
-                There are no saved contacts. Use the form above to add new
+                There are no saved contacts. Use the button above to add new
                 contacts.
               </Typography>
             </Paper>

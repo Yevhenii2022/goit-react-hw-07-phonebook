@@ -10,11 +10,10 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
-export const Contacts = ({ contacts, removeContact }) => {
+export const Contacts = ({ contacts, removeContact, theme }) => {
   const handleRemoveBtnClick = evt => {
     removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
   };
@@ -22,11 +21,15 @@ export const Contacts = ({ contacts, removeContact }) => {
   return (
     <List>
       {contacts.map(({ id, name, number }) => (
-        <Paper elevation={12} sx={{ p: 3, my: 1.5 }}>
+        <Paper
+          elevation={12}
+          sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}
+        >
           <ListItem
             key={id}
             secondaryAction={
               <IconButton
+                color="error"
                 edge="end"
                 aria-label="delete"
                 data-id={id}

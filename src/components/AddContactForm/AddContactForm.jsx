@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField, Modal, Box } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
@@ -35,6 +36,15 @@ const schema = yup.object().shape({
     .required('phone number is required'),
 });
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  // marginRight: theme.spacing(2),
+  // marginLeft: 0,
+  // width: '100%',
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: theme.spacing(2),
+  },
+}));
+
 export const AddContactForm = ({ addContact }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -56,7 +66,7 @@ export const AddContactForm = ({ addContact }) => {
 
   return (
     <>
-      <Button
+      <StyledButton
         variant="outlined"
         size="large"
         startIcon={<PersonAddIcon />}
@@ -65,7 +75,7 @@ export const AddContactForm = ({ addContact }) => {
         sx={{ mb: 4, ml: 9.5 }}
       >
         CREATE A NEW CONTACT
-      </Button>
+      </StyledButton>
       <Modal
         open={open}
         onClose={handleClose}
