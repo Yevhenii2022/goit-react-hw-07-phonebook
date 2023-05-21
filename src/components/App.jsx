@@ -8,7 +8,7 @@ import {
   showErrorMessage,
 } from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
-import { AddContactForm, Contacts, MyAppBar } from './';
+import { AddContactForm, Contacts, MyAppBar, ButtonIconAdd } from './';
 
 const getInitialСontacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -80,6 +80,7 @@ export const App = () => {
       <Typography variant="h3" sx={{ my: 1.5 }} align="center" color="#546e7a">
         PHONEBOOK
       </Typography>
+      <ButtonIconAdd children={'CREATE A NEW CONTACT'}></ButtonIconAdd>
       <Box
         component="section"
         m="auto"

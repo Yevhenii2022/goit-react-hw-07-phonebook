@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Paper, TextField } from '@mui/material';
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
@@ -92,7 +92,7 @@ export const AddContactForm = ({ addContact }) => {
             width: 200,
           }}
         >
-          <ContactPhoneIcon
+          <PersonAddIcon
             sx={{
               mr: 1.5,
             }}
