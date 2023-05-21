@@ -6,15 +6,39 @@ import {
   ListItemAvatar,
   IconButton,
   Avatar,
-  ListItemText,
+  Stack,
+  Box,
+  Typography,
   Paper,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
-export const Contacts = ({ contacts, removeContact }) => {
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(0),
+  },
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    margin: theme.spacing(0),
+    height: 40,
+    width: 40,
+  },
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    fontSize: theme.spacing(1.85),
+  },
+}));
+
+export const Contacts = ({ contacts, removeContact, theme }) => {
   const handleRemoveBtnClick = evt => {
     removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
   };
@@ -22,23 +46,44 @@ export const Contacts = ({ contacts, removeContact }) => {
   return (
     <List>
       {contacts.map(({ id, name, number }) => (
-        <Paper elevation={12} sx={{ p: 3, my: 1.5 }}>
+        <StyledPaper
+          elevation={12}
+          sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}
+        >
           <ListItem
             key={id}
             secondaryAction={
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                data-id={id}
-                data-name={name}
-                onClick={evt => handleRemoveBtnClick(evt)}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <a
+                  href={`tel:+38${number.replace(/[^\d]/g, '')}`}
+                  aria-label="call"
+                >
+                  <StyledAvatar sx={{ backgroundColor: '#4caf50', mr: 1 }}>
+                    <PhoneInTalkIcon />
+                  </StyledAvatar>
+                </a>
+                <IconButton
+                  color="primary"
+                  aria-label="edit contact"
+                  data-id={id}
+                >
+                  <BorderColorIcon />
+                </IconButton>
+                <IconButton
+                  color="error"
+                  // edge="end"
+                  aria-label="delete contact"
+                  data-id={id}
+                  data-name={name}
+                  onClick={evt => handleRemoveBtnClick(evt)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
             }
           >
             <ListItemAvatar>
-              <Avatar
+              <StyledAvatar
                 sx={{
                   mr: 2,
                   bgcolor: getColorFromName(
@@ -49,11 +94,14 @@ export const Contacts = ({ contacts, removeContact }) => {
                 }}
               >
                 {getFirstTwoLetters(name).toUpperCase()}
-              </Avatar>
+              </StyledAvatar>
             </ListItemAvatar>
-            <ListItemText primary={`${name}  ${number}`} />
+            <Box>
+              <StyledTypography variant="h6">{name}</StyledTypography>
+              <StyledTypography>{number}</StyledTypography>
+            </Box>
           </ListItem>
-        </Paper>
+        </StyledPaper>
       ))}
     </List>
   );

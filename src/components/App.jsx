@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Box, Container, Paper, CssBaseline, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { ToastContainer } from 'react-toastify';
-import { AddContactForm, Contacts, Filter } from './';
 import {
   showInfoMessage,
   showSuccessMessage,
   showErrorMessage,
 } from '../utils/notifications';
 import phonebook from '../data/phonebook.json';
+import { AddContactForm, Contacts, MyAppBar } from './';
 
 const getInitialСontacts = () => {
   const savedContacts = localStorage.getItem('contacts');
@@ -71,28 +71,23 @@ export const App = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <CssBaseline />
-      <Typography variant="h4" sx={{ my: 1.5 }} align="center">
+      <MyAppBar badgeNumber={contacts.length} setFilter={setFilter}></MyAppBar>
+      <Typography variant="h4" sx={{ my: 1.5 }} align="center" color="#78909c">
+        Welcome to our app for saving contacts
+      </Typography>
+      <Typography variant="h3" sx={{ my: 1.5 }} align="center" color="#546e7a">
         PHONEBOOK
       </Typography>
+      <AddContactForm addContact={addContactToList} />
+      <ToastContainer />
       <Box
         component="section"
         m="auto"
         sx={{
           mb: 5,
-          width: 400,
-        }}
-      >
-        <AddContactForm addContact={addContactToList} />
-        <ToastContainer />
-      </Box>
-      <Box
-        component="section"
-        m="auto"
-        sx={{
-          mb: 5,
-          width: 650,
+          maxWidth: '900px',
         }}
       >
         <Paper elevation={12} sx={{ p: 3 }}>
@@ -101,7 +96,6 @@ export const App = () => {
           </Typography>
           {contacts.length ? (
             <>
-              <Filter setFilter={setFilter} />
               <Contacts
                 contacts={getContactsList()}
                 removeContact={removeContact}
@@ -110,7 +104,7 @@ export const App = () => {
           ) : (
             <Paper elevation={10} sx={{ p: 1 }} align="center">
               <Typography variant="subtitle1: 'h4'" sx={{ my: 2 }}>
-                There are no saved contacts. Use the form above to add new
+                There are no saved contacts. Use the button above to add new
                 contacts.
               </Typography>
             </Paper>
