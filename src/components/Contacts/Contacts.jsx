@@ -21,6 +21,7 @@ import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 const StyledPaper = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(0),
+    height: theme.spacing(15.5),
   },
 }));
 
@@ -35,6 +36,12 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 const StyledTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     fontSize: theme.spacing(1.85),
+  },
+}));
+
+const StyledStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginTop: theme.spacing(15),
   },
 }));
 
@@ -53,7 +60,7 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
           <ListItem
             key={id}
             secondaryAction={
-              <Stack direction="row" alignItems="center" spacing={1}>
+              <StyledStack direction="row" alignItems="center" spacing={1}>
                 <a
                   href={`tel:+38${number.replace(/[^\d]/g, '')}`}
                   aria-label="call"
@@ -79,7 +86,7 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
                 >
                   <DeleteIcon />
                 </IconButton>
-              </Stack>
+              </StyledStack>
             }
           >
             <ListItemAvatar>
