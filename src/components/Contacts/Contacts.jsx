@@ -1,6 +1,6 @@
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+// import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
@@ -16,8 +16,8 @@ import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-// import { getContacts } from 'redux/selectors';
-// import { deleteContact } from 'redux/contactsSlice';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 
@@ -48,14 +48,25 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export const Contacts = ({ contacts, removeContact, theme }) => {
-  const handleRemoveBtnClick = evt => {
-    removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
+export const Contacts = ({ theme }) => {
+  // const handleRemoveBtnClick = evt => {
+  //   removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
+  // };
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+
+  const filteredContacts = contacts?.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  const handleDeleteContact = id => {
+    dispatch(deleteContact(id));
   };
 
   return (
     <List>
-      {contacts.map(({ id, name, number }) => (
+      {filteredContacts.map(({ id, name, number }) => (
         <StyledPaper
           elevation={12}
           sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}
@@ -85,7 +96,7 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
                   aria-label="delete contact"
                   data-id={id}
                   data-name={name}
-                  onClick={evt => handleRemoveBtnClick(evt)}
+                  onClick={() => handleDeleteContact(id)}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -117,13 +128,13 @@ export const Contacts = ({ contacts, removeContact, theme }) => {
   );
 };
 
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
-  removeContact: PropTypes.func.isRequired,
-};
+// Contacts.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     }).isRequired
+//   ).isRequired,
+//   removeContact: PropTypes.func.isRequired,
+// };

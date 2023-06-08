@@ -5,11 +5,14 @@ const filterSlice = createSlice({
   initialState: '',
   reducers: {
     filter: {
-      reducer: (state, action) => {
+      reducer(state, action) {
         state = action.payload.value;
+        return state;
       },
-      prepare: value => {
-        return { payload: { value } };
+      prepare(value) {
+        return {
+          payload: { value },
+        };
       },
     },
   },

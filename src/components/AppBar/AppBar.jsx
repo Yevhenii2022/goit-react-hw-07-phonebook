@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
 import {
   AppBar,
@@ -16,6 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CallIcon from '@mui/icons-material/Call';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { filter } from '../../redux/filterSlice';
+// import { getFilter } from 'redux/selectors';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,7 +60,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const MyAppBar = ({ setFilter, badgeNumber = 0 }) => {
+export const MyAppBar = ({ badgeNumber = 0 }) => {
+  const dispatch = useDispatch();
+  // const filterValue = useSelector(state => state.filter);
   const [value, setValue] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -67,7 +72,7 @@ export const MyAppBar = ({ setFilter, badgeNumber = 0 }) => {
 
   const handleInputChange = ({ target }) => {
     setValue(target.value);
-    setFilter(target.value.toLowerCase().trim());
+    dispatch(filter(target.value.toLowerCase().trim()));
   };
 
   const handleProfileMenuOpen = event => {

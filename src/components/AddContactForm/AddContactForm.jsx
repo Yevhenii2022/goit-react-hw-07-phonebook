@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Button, TextField, Modal, Box } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
+// import { getContacts } from '../../redux/selectors';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
 
 const styleModal = {
@@ -45,7 +48,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const AddContactForm = ({ addContact }) => {
+export const AddContactForm = () => {
+  // const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -56,9 +62,9 @@ export const AddContactForm = ({ addContact }) => {
       number: '',
     },
     validationSchema: schema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
+    onSubmit: ({ name, number }, { setSubmitting, resetForm }) => {
       resetForm();
-      addContact(values);
+      dispatch(addContact(name, number));
       setSubmitting(false);
       setOpen(false);
     },
@@ -151,6 +157,6 @@ export const AddContactForm = ({ addContact }) => {
   );
 };
 
-AddContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};
+// AddContactForm.propTypes = {
+//   addContact: PropTypes.func.isRequired,
+// };
