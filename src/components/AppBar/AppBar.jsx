@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AppBar,
   Box,
@@ -16,10 +16,12 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import CallIcon from '@mui/icons-material/Call';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { filter } from '../../redux/filterSlice';
+import { getContacts } from 'redux/selectors';
 import { Search, SearchIconWrapper, StyledInputBase } from './AppBar.styled';
 
-export const MyAppBar = ({ badgeNumber = 0 }) => {
+export const MyAppBar = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
   const [value, setValue] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -102,7 +104,7 @@ export const MyAppBar = ({ badgeNumber = 0 }) => {
           aria-label="show 4 new contacts"
           color="inherit"
         >
-          <Badge badgeContent={badgeNumber} color="error" showZero>
+          <Badge badgeContent={contacts.length} color="error" showZero>
             <CallIcon />
           </Badge>
         </IconButton>
@@ -182,7 +184,7 @@ export const MyAppBar = ({ badgeNumber = 0 }) => {
               aria-label="show 4 new contacts"
               color="inherit"
             >
-              <Badge badgeContent={badgeNumber} color="error" showZero>
+              <Badge badgeContent={contacts.length} color="error" showZero>
                 <CallIcon />
               </Badge>
             </IconButton>

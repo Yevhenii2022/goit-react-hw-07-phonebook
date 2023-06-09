@@ -1,6 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, ListItem, ListItemAvatar, IconButton, Box } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  IconButton,
+  Paper,
+  Typography,
+  Box,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -29,6 +37,20 @@ export const Contacts = ({ theme }) => {
     dispatch(deleteContact(id));
     showErrorMessage(`You have deleted a contact "${name}"`);
   };
+
+  if (!filteredContacts?.length) {
+    return (
+      <Paper
+        elevation={10}
+        sx={{ mx: 'auto', p: 1, maxWidth: 330 }}
+        align="center"
+      >
+        <Typography variant="subtitle1: 'h4'" sx={{ my: 2 }}>
+          No contact was found for your request.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <List>
