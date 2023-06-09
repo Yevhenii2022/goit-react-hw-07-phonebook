@@ -1,67 +1,33 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import PropTypes from 'prop-types';
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  IconButton,
-  Avatar,
-  Stack,
-  Box,
-  Typography,
-  Paper,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { List, ListItem, ListItemAvatar, IconButton, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsSlice';
+import { showErrorMessage } from '../../utils/notifications';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(0),
-    height: theme.spacing(15.5),
-  },
-}));
-
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    margin: theme.spacing(0),
-    height: 40,
-    width: 40,
-  },
-}));
-
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    fontSize: theme.spacing(1.85),
-  },
-}));
-
-const StyledStack = styled(Stack)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    marginTop: theme.spacing(15),
-  },
-}));
+import {
+  StyledPaper,
+  StyledAvatar,
+  StyledTypography,
+  StyledStack,
+} from './Contacts.styled';
 
 export const Contacts = ({ theme }) => {
-  // const handleRemoveBtnClick = evt => {
-  //   removeContact(evt.currentTarget.dataset.id, evt.currentTarget.dataset.name);
-  // };
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
 
-  const filteredContacts = contacts?.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter)
   );
 
-  const handleDeleteContact = id => {
+  const handleDeleteContact = (id, name) => {
     dispatch(deleteContact(id));
+    showErrorMessage(`You have deleted a contact "${name}"`);
   };
 
   return (
@@ -96,7 +62,7 @@ export const Contacts = ({ theme }) => {
                   aria-label="delete contact"
                   data-id={id}
                   data-name={name}
-                  onClick={() => handleDeleteContact(id)}
+                  onClick={() => handleDeleteContact(id, name)}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -127,14 +93,3 @@ export const Contacts = ({ theme }) => {
     </List>
   );
 };
-
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     }).isRequired
-//   ).isRequired,
-//   removeContact: PropTypes.func.isRequired,
-// };

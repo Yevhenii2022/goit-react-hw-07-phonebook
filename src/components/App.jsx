@@ -1,80 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Container, Paper, CssBaseline, Typography } from '@mui/material';
-// import { nanoid } from 'nanoid';
 import { ToastContainer } from 'react-toastify';
-
-// import {
-//   showInfoMessage,
-//   showSuccessMessage,
-//   showErrorMessage,
-// } from '../utils/notifications';
-
-// import phonebook from '../data/phonebook.json';
 import { getContacts } from 'redux/selectors';
 import { AddContactForm, Contacts, MyAppBar } from './';
 
-// const getInitialСontacts = () => {
-//   const savedContacts = localStorage.getItem('contacts');
-//   if (savedContacts !== null) {
-//     const parsedContacts = JSON.parse(savedContacts);
-//     return parsedContacts;
-//   }
-//   return phonebook;
-// };
-
 export const App = () => {
   const contacts = useSelector(getContacts);
-  console.log(contacts.length);
-  // const [contacts, setContacts] = useState(getInitialСontacts);
-  // const [filter, setFilter] = useState('');
-
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-
-  // const addContactToList = ({ name, number }) => {
-  //   const repeatNumber = contacts.find(contact => contact.number === number);
-
-  //   const repeatName = contacts.some(
-  //     contact => contact.name.toLowerCase() === name.toLowerCase().trim()
-  //   );
-
-  //   if (repeatName) {
-  //     showInfoMessage(
-  //       `The contact with name "${name}" is already in your phonebook`
-  //     );
-  //     return;
-  //   } else if (repeatNumber) {
-  //     showInfoMessage(
-  //       `Number "${number}" is already in contacts with name "${repeatNumber.name}"`
-  //     );
-  //     return;
-  //   }
-
-  //   setContacts(prevState => [
-  //     ...prevState,
-  //     {
-  //       id: nanoid(),
-  //       name,
-  //       number,
-  //     },
-  //   ]);
-  //   showSuccessMessage(
-  //     `New contact "${name}" has been added in your phone book`
-  //   );
-  // };
-
-  // const getContactsList = () => {
-  //   return contacts.filter(contact =>
-  //     contact.name.toLowerCase().includes(filter)
-  //   );
-  // };
-
-  // const removeContact = (idToRemove, name) => {
-  //   setContacts(contact => contact.filter(({ id }) => id !== idToRemove));
-  //   showErrorMessage(`You have deleted a contact "${name}"`);
-  // };
 
   return (
     <Container maxWidth="lg">
@@ -102,10 +34,7 @@ export const App = () => {
           </Typography>
           {contacts.length ? (
             <>
-              <Contacts
-              // contacts={getContactsList()}
-              // removeContact={removeContact}
-              />
+              <Contacts />
             </>
           ) : (
             <Paper elevation={10} sx={{ p: 1 }} align="center">

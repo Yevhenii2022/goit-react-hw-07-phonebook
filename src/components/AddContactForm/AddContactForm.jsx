@@ -1,28 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Button, TextField, Modal, Box } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { styled } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contactsSlice';
-// import { getContacts } from '../../redux/selectors';
+import { getContacts } from '../../redux/selectors';
+import { styleModal, StyledButton } from './AddContactForm.styled';
+import { showSuccessMessage, showInfoMessage } from '../../utils/notifications';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
-
-const styleModal = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  margin: 0,
-  transform: 'translate(-50%, -50%)',
-  width: 390,
-  bgcolor: 'background.paper',
-  border: '2px solid #303f9f',
-  borderRadius: 1.5,
-  boxShadow: 24,
-  p: 4,
-};
 
 const schema = yup.object().shape({
   name: yup
@@ -39,17 +25,8 @@ const schema = yup.object().shape({
     .required('phone number is required'),
 });
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  // marginRight: theme.spacing(2),
-  // marginLeft: 0,
-  // width: '100%',
-  [theme.breakpoints.down('sm')]: {
-    marginLeft: theme.spacing(2),
-  },
-}));
-
 export const AddContactForm = () => {
-  // const contacts = useSelector(getContacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
@@ -63,8 +40,28 @@ export const AddContactForm = () => {
     },
     validationSchema: schema,
     onSubmit: ({ name, number }, { setSubmitting, resetForm }) => {
+      const repeatNumber = contacts.find(contact => contact.number === number);
+      const repeatName = contacts.some(
+        contact => contact.name.toLowerCase() === name.toLowerCase().trim()
+      );
+
+      if (repeatName) {
+        showInfoMessage(
+          `The contact with name "${name}" is already in your phonebook`
+        );
+        return;
+      } else if (repeatNumber) {
+        showInfoMessage(
+          `Number "${number}" is already in contacts with name "${repeatNumber.name}"`
+        );
+        return;
+      }
+
       resetForm();
       dispatch(addContact(name, number));
+      showSuccessMessage(
+        `New contact "${name}" has been added in your phone book`
+      );
       setSubmitting(false);
       setOpen(false);
     },
@@ -156,7 +153,3 @@ export const AddContactForm = () => {
     </>
   );
 };
-
-// AddContactForm.propTypes = {
-//   addContact: PropTypes.func.isRequired,
-// };

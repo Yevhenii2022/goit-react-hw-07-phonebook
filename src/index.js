@@ -21,7 +21,6 @@ const theme = createTheme({
         body: {
           backgroundImage:
             'linear-gradient(180deg, #ffffff 0, #f2f4f5 25%, #d1dde3 50%, #b1c6d2 75%, #94b2c2 100%)',
-          // minHeight: '100%',
         },
         '&::-webkit-scrollbar': {
           width: '8px',
