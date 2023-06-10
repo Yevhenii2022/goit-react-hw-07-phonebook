@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   List,
   ListItem,
@@ -9,14 +9,12 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
-import { showErrorMessage } from '../../utils/notifications';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
+import { DropdownDeleteContact } from '../index';
 import {
   StyledPaper,
   StyledAvatar,
@@ -25,18 +23,12 @@ import {
 } from './Contacts.styled';
 
 export const Contacts = ({ theme }) => {
-  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter)
   );
-
-  const handleDeleteContact = (id, name) => {
-    dispatch(deleteContact(id));
-    showErrorMessage(`You have deleted a contact "${name}"`);
-  };
 
   if (!filteredContacts?.length) {
     return (
@@ -54,7 +46,7 @@ export const Contacts = ({ theme }) => {
 
   return (
     <List>
-      {filteredContacts.map(({ id, name, number }) => (
+      {filteredContacts.reverse().map(({ id, name, number }) => (
         <StyledPaper
           elevation={12}
           sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}
@@ -78,16 +70,7 @@ export const Contacts = ({ theme }) => {
                 >
                   <BorderColorIcon />
                 </IconButton>
-                <IconButton
-                  color="error"
-                  // edge="end"
-                  aria-label="delete contact"
-                  data-id={id}
-                  data-name={name}
-                  onClick={() => handleDeleteContact(id, name)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                <DropdownDeleteContact id={id} name={name} />
               </StyledStack>
             }
           >
