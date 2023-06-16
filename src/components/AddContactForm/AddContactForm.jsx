@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contactsSlice';
 import { getContacts } from '../../redux/selectors';
 import { styleModal, StyledButton } from './AddContactForm.styled';
-import { showSuccessMessage, showInfoMessage } from '../../utils/notifications';
+import { showInfoMessage } from '../../utils/notifications';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
 
 const schema = yup.object().shape({
@@ -59,9 +59,9 @@ export const AddContactForm = () => {
 
       resetForm();
       dispatch(addContact(name, number));
-      showSuccessMessage(
-        `New contact "${name}" has been added in your phone book`
-      );
+      // showSuccessMessage(
+      //   `New contact "${name}" has been added in your phone book`
+      // );
       setSubmitting(false);
       setOpen(false);
     },

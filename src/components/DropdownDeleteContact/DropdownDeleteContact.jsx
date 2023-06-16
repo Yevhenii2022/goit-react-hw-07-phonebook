@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteContact } from 'redux/contactsSlice';
-import { showErrorMessage } from '../../utils/notifications';
+// import { showErrorMessage } from '../../utils/notifications';
 
 export const DropdownDeleteContact = ({ id, name }) => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export const DropdownDeleteContact = ({ id, name }) => {
 
   const handleDeleteContact = (id, name) => {
     dispatch(deleteContact(id));
-    showErrorMessage(`You have deleted a contact "${name}"`);
+    // showErrorMessage(`You have deleted a contact "${name}"`);
   };
 
   return (
