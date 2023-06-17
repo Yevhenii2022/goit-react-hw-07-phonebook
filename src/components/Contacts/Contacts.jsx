@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { getContacts, getFilter } from 'redux/selectors';
+import { selectFilteredContacts, selectIsLoading } from 'redux/selectors';
 import { getColorFromName } from '../../utils/getColorFromName';
 import { getFirstTwoLetters } from '../../utils/getFirstTwoLetters';
 import { DropdownDeleteContact } from '../index';
@@ -23,14 +23,17 @@ import {
 } from './Contacts.styled';
 
 export const Contacts = ({ theme }) => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  // const contacts = useSelector(getContacts);
+  // const filter = useSelector(getFilter);
+  const isLoading = useSelector(selectIsLoading);
+  const filteredContacts = useSelector(selectFilteredContacts);
+  // console.log(filteredContacts);
 
-  const filteredContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(filter)
-  );
+  // const filteredContacts = contacts.filter(({ name }) =>
+  //   name.toLowerCase().includes(filter)
+  // );
 
-  if (!filteredContacts?.length) {
+  if (!filteredContacts?.length && !isLoading) {
     return (
       <Paper
         elevation={10}
@@ -46,7 +49,7 @@ export const Contacts = ({ theme }) => {
 
   return (
     <List>
-      {filteredContacts.reverse().map(({ id, name, number }) => (
+      {[...filteredContacts].reverse().map(({ id, name, number }) => (
         <StyledPaper
           elevation={12}
           sx={{ p: 3, my: 1.5, mx: 'auto', maxWidth: '800px' }}

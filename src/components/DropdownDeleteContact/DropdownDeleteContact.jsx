@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -9,11 +9,13 @@ import {
   DialogTitle,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
+import { selectIsLoading } from 'redux/selectors';
 // import { showErrorMessage } from '../../utils/notifications';
 
 export const DropdownDeleteContact = ({ id, name }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -24,10 +26,10 @@ export const DropdownDeleteContact = ({ id, name }) => {
     setOpen(false);
   };
 
-  const handleDeleteContact = (id, name) => {
-    dispatch(deleteContact(id));
-    // showErrorMessage(`You have deleted a contact "${name}"`);
-  };
+  // const handleDeleteContact = (id, name) => {
+  //   dispatch(deleteContact(id));
+  //   // showErrorMessage(`You have deleted a contact "${name}"`);
+  // };
 
   return (
     <>
@@ -37,6 +39,7 @@ export const DropdownDeleteContact = ({ id, name }) => {
         data-id={id}
         data-name={name}
         onClick={handleClickOpen}
+        disabled={isLoading}
       >
         <DeleteIcon />
       </IconButton>
@@ -53,7 +56,7 @@ export const DropdownDeleteContact = ({ id, name }) => {
           <Button color="error" onClick={handleClose}>
             NOT
           </Button>
-          <Button color="success" onClick={() => handleDeleteContact(id, name)}>
+          <Button color="success" onClick={() => dispatch(deleteContact(id))}>
             YES
           </Button>
         </DialogActions>

@@ -4,8 +4,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
-import { getContacts } from '../../redux/selectors';
+import { addContact } from '../../redux/operations';
+import { selectContacts, selectIsLoading } from '../../redux/selectors';
 import { styleModal, StyledButton } from './AddContactForm.styled';
 import { showInfoMessage } from '../../utils/notifications';
 import { formatPhoneNumber } from '../../utils/phoneFormatter';
@@ -26,7 +26,8 @@ const schema = yup.object().shape({
 });
 
 export const AddContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
@@ -58,7 +59,7 @@ export const AddContactForm = () => {
       }
 
       resetForm();
-      dispatch(addContact(name, number));
+      dispatch(addContact({ name, number }));
       // showSuccessMessage(
       //   `New contact "${name}" has been added in your phone book`
       // );
@@ -139,6 +140,7 @@ export const AddContactForm = () => {
               sx={{
                 width: 200,
               }}
+              disabled={isLoading}
             >
               <PersonAddIcon
                 sx={{

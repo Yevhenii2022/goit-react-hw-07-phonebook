@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, CssBaseline, Typography } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
-import { AddContactForm, ContactsList, MyAppBar } from './';
+import { AddContactForm, ContactsList, Loader, MyAppBar } from './';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { selectIsLoading } from 'redux/selectors';
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <Container maxWidth="lg">
       <MyAppBar></MyAppBar>
@@ -16,6 +26,7 @@ export const App = () => {
       <AddContactForm />
       <ContactsList />
       <CssBaseline />
+      {isLoading && <Loader />}
       <ToastContainer />
     </Container>
   );

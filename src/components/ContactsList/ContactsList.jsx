@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Paper, Typography } from '@mui/material';
-import { getContacts } from 'redux/selectors';
+import { selectContacts, selectIsLoading } from 'redux/selectors';
 import { Contacts } from '../Contacts/Contacts';
 
 export const ContactsList = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
 
   return (
     <Box
@@ -21,9 +22,7 @@ export const ContactsList = () => {
           Contacts
         </Typography>
 
-        {contacts.length ? (
-          <Contacts />
-        ) : (
+        {contacts.length === 0 && !isLoading ? (
           <Paper
             elevation={10}
             sx={{ mx: 'auto', p: 1, maxWidth: 560 }}
@@ -34,6 +33,8 @@ export const ContactsList = () => {
               contacts.
             </Typography>
           </Paper>
+        ) : (
+          <Contacts />
         )}
       </Paper>
     </Box>

@@ -23,7 +23,9 @@ export const addContact = createAsyncThunk(
     try {
       const { data } = await axios.post('/contacts', contact);
       showSuccessMessage(
-        `New contact "${contact.name}" has been added in your phone book`
+        <span>
+          New contact <b>"{contact.name}"</b> has been added in your phone book
+        </span>
       );
       return data;
     } catch (error) {
@@ -38,8 +40,12 @@ export const deleteContact = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const { data } = await axios.delete(`/contacts/${id}`);
-      showErrorMessage(`You have deleted a contact "${data.name}"`);
-      return data;
+      showErrorMessage(
+        <span>
+          You have deleted a contact <b>"{data.name}"</b>
+        </span>
+      );
+      return data.id;
     } catch (error) {
       showErrorMessage(error.message || 'Something went wrong...');
       return thunkAPI.rejectWithValue(error.message);
