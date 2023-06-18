@@ -23,15 +23,8 @@ import {
 } from './Contacts.styled';
 
 export const Contacts = ({ theme }) => {
-  // const contacts = useSelector(getContacts);
-  // const filter = useSelector(getFilter);
   const isLoading = useSelector(selectIsLoading);
   const filteredContacts = useSelector(selectFilteredContacts);
-  // console.log(filteredContacts);
-
-  // const filteredContacts = contacts.filter(({ name }) =>
-  //   name.toLowerCase().includes(filter)
-  // );
 
   if (!filteredContacts?.length && !isLoading) {
     return (

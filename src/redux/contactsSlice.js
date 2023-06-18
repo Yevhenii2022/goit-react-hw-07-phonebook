@@ -1,13 +1,13 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts } from './operations';
 
-const extraActions = [addContact, deleteContact, fetchContacts];
-
 const initialState = {
   items: [],
   isLoading: false,
   error: null,
 };
+
+const extraActions = [addContact, deleteContact, fetchContacts];
 
 // const pending = state => {
 //   state.isLoading = true;

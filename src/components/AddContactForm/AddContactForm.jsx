@@ -60,9 +60,6 @@ export const AddContactForm = () => {
 
       resetForm();
       dispatch(addContact({ name, number }));
-      // showSuccessMessage(
-      //   `New contact "${name}" has been added in your phone book`
-      // );
       setSubmitting(false);
       setOpen(false);
     },
